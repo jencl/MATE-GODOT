@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://b2kkdg35wpjkm"]
+[gd_scene load_steps=24 format=3 uid="uid://b2kkdg35wpjkm"]
 
 [ext_resource type="Script" path="res://scripts/player.gd" id="1_1dn8g"]
 [ext_resource type="Texture2D" uid="uid://depg2gj16v5a1" path="res://Treasure Hunters/Captain Clown Nose/Sprites/Captain Clown Nose/Captain Clown Nose with Sword/10-Run Sword/Run Sword 05.png" id="1_yhecb"]
@@ -16,6 +16,22 @@
 [ext_resource type="Texture2D" uid="uid://ds0xvciki27fa" path="res://Treasure Hunters/Captain Clown Nose/Sprites/Captain Clown Nose/Captain Clown Nose with Sword/11-Jump Sword/Jump Sword 02.png" id="13_ns30s"]
 [ext_resource type="Texture2D" uid="uid://b5eidgccls4hn" path="res://Treasure Hunters/Captain Clown Nose/Sprites/Captain Clown Nose/Captain Clown Nose with Sword/11-Jump Sword/Jump Sword 03.png" id="14_62si7"]
 [ext_resource type="Texture2D" uid="uid://fjiuh5dp168k" path="res://Treasure Hunters/Captain Clown Nose/Sprites/Captain Clown Nose/Captain Clown Nose with Sword/12-Fall Sword/Fall Sword 01.png" id="15_quhaq"]
+
+[sub_resource type="Animation" id="Animation_s2x5b"]
+resource_name = "fall"
+length = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("15_quhaq")]
+}
 
 [sub_resource type="Animation" id="Animation_8no2n"]
 resource_name = "idle"
@@ -68,22 +84,6 @@ tracks/0/keys = {
 "values": [ExtResource("7_k04v5"), ExtResource("8_nxxbg"), ExtResource("9_7vv00"), ExtResource("10_pm2th"), ExtResource("1_yhecb"), ExtResource("11_lr4v4")]
 }
 
-[sub_resource type="Animation" id="Animation_s2x5b"]
-resource_name = "fall"
-length = 0.1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite2D:texture")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [ExtResource("15_quhaq")]
-}
-
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_ntih6"]
 _data = {
 "fall": SubResource("Animation_s2x5b"),
@@ -95,11 +95,15 @@ _data = {
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ukrjv"]
 size = Vector2(24, 28)
 
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_x0cd1"]
+radius = 7.0
+height = 20.0
+
 [node name="player" type="CharacterBody2D"]
 script = ExtResource("1_1dn8g")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-texture = ExtResource("2_nt4j1")
+texture = ExtResource("15_quhaq")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
@@ -111,7 +115,13 @@ position = Vector2(0, -3)
 shape = SubResource("RectangleShape2D_ukrjv")
 
 [node name="Camera2D" type="Camera2D" parent="."]
-zoom = Vector2(2, 2)
 limit_left = 0
 limit_top = -1000
 limit_right = 1000
+
+[node name="Area2D" type="Area2D" parent="."]
+monitoring = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(0, -2)
+shape = SubResource("CapsuleShape2D_x0cd1")
