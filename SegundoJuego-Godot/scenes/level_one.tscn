@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://ixn6nygjk7yv"]
+[gd_scene load_steps=11 format=3 uid="uid://ixn6nygjk7yv"]
 
 [ext_resource type="Texture2D" uid="uid://d17xg64xyuibv" path="res://Treasure Hunters/Palm Tree Island/Sprites/Terrain/Terrain (32x32).png" id="1_7vmsq"]
 [ext_resource type="PackedScene" uid="uid://b2kkdg35wpjkm" path="res://scenes/player.tscn" id="2_j5hu8"]
@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://c0wpr85l1t8e1" path="res://scenes/spikes.tscn" id="5_2iagg"]
 [ext_resource type="PackedScene" uid="uid://bkafssvag8fxo" path="res://scenes/coin.tscn" id="6_xxo0n"]
 [ext_resource type="PackedScene" uid="uid://dxbr5guqjdlan" path="res://scenes/hud.tscn" id="7_68llt"]
+[ext_resource type="PackedScene" uid="uid://be4mb1murc65m" path="res://scenes/enemy.tscn" id="8_oarqf"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_16fei"]
 texture = ExtResource("1_7vmsq")
@@ -629,8 +630,8 @@ sources/0 = SubResource("TileSetAtlasSource_16fei")
 [node name="LevelOne" type="Node2D"]
 
 [node name="BgImage" type="Sprite2D" parent="."]
-position = Vector2(579, 331.688)
-scale = Vector2(3.07812, 5.12988)
+position = Vector2(989.5, 335.5)
+scale = Vector2(5.99219, 7.72656)
 texture = ExtResource("3_bc8e3")
 
 [node name="TileMap" type="TileMap" parent="."]
@@ -681,3 +682,6 @@ offset_bottom = 23.0
 [node name="TextureRect2" type="TextureRect" parent="coin3/HUD"]
 offset_right = 40.0
 offset_bottom = 40.0
+
+[node name="enemy" parent="." instance=ExtResource("8_oarqf")]
+position = Vector2(669, 391)

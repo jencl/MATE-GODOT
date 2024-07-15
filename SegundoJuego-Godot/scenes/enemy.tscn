@@ -1,0 +1,87 @@
+[gd_scene load_steps=16 format=3 uid="uid://be4mb1murc65m"]
+
+[ext_resource type="Texture2D" uid="uid://bta145nmdnkg7" path="res://Treasure Hunters/The Crusty Crew/Sprites/Fierce Tooth/09-Dead Hit/Dead Hit 04.png" id="1_2dp4a"]
+[ext_resource type="Script" path="res://scripts/enemy.gd" id="1_gel4l"]
+[ext_resource type="Texture2D" uid="uid://h74mbrrk62xd" path="res://Treasure Hunters/The Crusty Crew/Sprites/Fierce Tooth/02-Run/Run 01.png" id="2_j3ptv"]
+[ext_resource type="Texture2D" uid="uid://8hdhv4l4c670" path="res://Treasure Hunters/The Crusty Crew/Sprites/Fierce Tooth/02-Run/Run 02.png" id="3_sbr74"]
+[ext_resource type="Texture2D" uid="uid://c20ocjn4srvd7" path="res://Treasure Hunters/The Crusty Crew/Sprites/Fierce Tooth/02-Run/Run 03.png" id="4_enoyo"]
+[ext_resource type="Texture2D" uid="uid://d1fo0665texta" path="res://Treasure Hunters/The Crusty Crew/Sprites/Fierce Tooth/02-Run/Run 04.png" id="5_bre3l"]
+[ext_resource type="Texture2D" uid="uid://b8qv2m5oebfvl" path="res://Treasure Hunters/The Crusty Crew/Sprites/Fierce Tooth/02-Run/Run 05.png" id="6_v30gg"]
+[ext_resource type="Texture2D" uid="uid://c6vwiodf7kv4s" path="res://Treasure Hunters/The Crusty Crew/Sprites/Fierce Tooth/09-Dead Hit/Dead Hit 01.png" id="7_xf08j"]
+[ext_resource type="Texture2D" uid="uid://dutc50civk7n0" path="res://Treasure Hunters/The Crusty Crew/Sprites/Fierce Tooth/09-Dead Hit/Dead Hit 02.png" id="8_5vtkx"]
+[ext_resource type="Texture2D" uid="uid://cumbm62rpfmlp" path="res://Treasure Hunters/The Crusty Crew/Sprites/Fierce Tooth/09-Dead Hit/Dead Hit 03.png" id="9_vq7hv"]
+
+[sub_resource type="Animation" id="Animation_5y5e8"]
+resource_name = "run"
+length = 0.6
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [ExtResource("2_j3ptv"), ExtResource("3_sbr74"), ExtResource("4_enoyo"), ExtResource("5_bre3l"), ExtResource("6_v30gg"), ExtResource("2_j3ptv")]
+}
+
+[sub_resource type="Animation" id="Animation_j0nau"]
+resource_name = "dead"
+length = 0.4
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [ExtResource("7_xf08j"), ExtResource("8_5vtkx"), ExtResource("9_vq7hv"), ExtResource("1_2dp4a")]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_i257u"]
+_data = {
+"dead": SubResource("Animation_j0nau"),
+"run": SubResource("Animation_5y5e8")
+}
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_qyqo0"]
+size = Vector2(21, 22)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ka01t"]
+radius = 13.0384
+
+[node name="enemy" type="CharacterBody2D"]
+script = ExtResource("1_gel4l")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("5_bre3l")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_i257u")
+}
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0.5, -1)
+shape = SubResource("RectangleShape2D_qyqo0")
+
+[node name="Hitbox" type="Area2D" parent="."]
+collision_layer = 2
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
+position = Vector2(1, -1)
+shape = SubResource("CircleShape2D_ka01t")
+
+[node name="RayCast2D" type="RayCast2D" parent="."]
+position = Vector2(-12, 0)
+target_position = Vector2(0, 15)
+
+[connection signal="area_entered" from="Hitbox" to="." method="_on_hitbox_area_entered"]
